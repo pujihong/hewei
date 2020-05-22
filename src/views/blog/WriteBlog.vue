@@ -42,6 +42,9 @@ export default {
       content: ""
     };
   },
+  mounted() {
+    // 查询自己所有的标签
+  },
   methods: {
     backHome() {
       // 判断是否有输入
