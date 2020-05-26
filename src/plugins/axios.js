@@ -60,9 +60,13 @@ _axios.interceptors.response.use(
           break;
         case 401:
           error.message = "未授权，请重新登录";
+          sessionStorage.removeItem("token");
+          router.push("/login");
           break;
         case 403:
           error.message = "拒绝访问";
+          sessionStorage.removeItem("token");
+          router.push("/login");
           break;
         case 404:
           error.message = "请求错误,未找到资源";
@@ -97,10 +101,8 @@ _axios.interceptors.response.use(
     } else {
       error.message = "连接服务器失败";
     }
-    Message.error(error.message);
-    sessionStorage.removeItem("token");
-    router.push("/login");
-    // return Promise.reject(error);
+    // Message.error(error.message);
+    return Promise.reject(error);
   }
 );
 

@@ -37,8 +37,10 @@ export default {
     };
   },
   methods: {
-    inputChange(e) {
-      this.$emit("getContent", e);
+    inputChange(value, render) {
+      console.log(value);
+      console.log(render);
+      this.$emit("getContent", value, render);
     }
   }
 };
@@ -47,5 +49,6 @@ export default {
 <style scoped lang="scss">
 #editor {
   margin: auto;
+  height: 580px;
 }
 </style>

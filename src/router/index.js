@@ -131,7 +131,6 @@ function addDynamicMenuAndRoutes(token) {
       } else {
         router.options.routes[0].children = routeList;
       }
-      console.log(router.options);
       /**
        * 这样会重复添加路由
        */
