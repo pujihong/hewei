@@ -93,6 +93,9 @@ function addDynamicRoutes(menuList, routes) {
     } else if (menuList[i].url && /\S/.test(menuList[i].url)) {
       let url = menuList[i].url;
       // 创建路由配置 url第一位必须带/
+      if (url.substr(0, 1) !== "/") {
+        url = "/" + url;
+      }
       let route = {
         path: url,
         component: resolve => require([`@/views${url}`], resolve),
@@ -135,6 +138,7 @@ function addDynamicMenuAndRoutes(token) {
        * 这样会重复添加路由
        */
       router.selfAddRoutes(router.options.routes);
+      console.log(router);
       // 保存加载状态
       store.commit("menuRouteLoaded", true);
       // 保存菜单树

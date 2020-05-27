@@ -18,6 +18,8 @@
         <el-col :span="18" class="pd-10">
           <div>
             这个用来展示记录列表
+            <article v-html="value"></article>
+
           </div>
         </el-col>
       </el-row>
@@ -32,7 +34,29 @@
 
 <script>
 export default {
-  name: "home"
+  name: "home",
+  data() {
+    return {
+      articleList: [],
+      value: ""
+    };
+  },
+  mounted() {
+    this.$api.blog.getUserBlogArticleList().then(res => {
+      if (res.code === 0) {
+        let dateList = res.data.records;
+        this.articleList = dateList;
+        this.value = dateList[0].htmlContent;
+      } else {
+        this.$message.error({
+          message: res.message
+        });
+      }
+    });
+  },
+  methods: {
+
+  }
 };
 </script>
 

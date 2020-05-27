@@ -38,8 +38,6 @@ export default {
   },
   methods: {
     inputChange(value, render) {
-      console.log(value);
-      console.log(render);
       this.$emit("getContent", value, render);
     }
   }
