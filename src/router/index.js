@@ -15,6 +15,7 @@ const routes = [
   {
     path: "/",
     component: Home,
+    name: "首页",
     children: [
       {
         path: "",
@@ -138,7 +139,6 @@ function addDynamicMenuAndRoutes(token) {
        * 这样会重复添加路由
        */
       router.selfAddRoutes(router.options.routes);
-      console.log(router);
       // 保存加载状态
       store.commit("menuRouteLoaded", true);
       // 保存菜单树

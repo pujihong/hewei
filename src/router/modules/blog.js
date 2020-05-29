@@ -10,12 +10,14 @@ const blogRoutes = {
       children: [
         {
           path: "",
+          name: "BLogHome",
           component: () => import("@/views/blog/Home.vue")
         }
       ]
     },
     {
       path: "writeBlog",
+      name: "writeBlog",
       component: () => import("@/views/blog/WriteBlog.vue")
     }
   ]

@@ -1,10 +1,9 @@
 <template>
-  <div
-    class="main-container"
-    :class="
-      $store.state.sys.collapse ? 'position-collapse-left' : 'position-left'
-    "
-  >
+  <div class="main-container"
+    :class="$store.state.sys.collapse ? 'position-collapse-left' : 'position-left'">
+    <!-- 面包屑 -->
+    <Breadcrumb />
+    <HeaderTabs />
     <!-- 主内容区域 -->
     <div class="main-content">
       <keep-alive>
@@ -17,7 +16,14 @@
 </template>
 
 <script>
-export default {};
+import Breadcrumb from "@/components/Breadcrumb";
+import HeaderTabs from "@/components/HeaderTabs";
+export default {
+  components: {
+    Breadcrumb,
+    HeaderTabs
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -28,19 +34,17 @@ export default {};
   left: 1px;
   right: 1px;
   bottom: 0;
+
   .main-content {
-    position: absolute;
-    top: 45px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
     padding: 5px;
   }
 }
+
 .position-left {
   left: 200px;
 }
+
 .position-collapse-left {
-  left: 65px;
+  left: 85px;
 }
 </style>

@@ -27,6 +27,8 @@
           <el-menu-item index="1" @click="$router.push('/blog/index')"
             >{{ $t("common.blog") }}
           </el-menu-item>
+          <el-menu-item index="2" @click="openWindow('http://localhost:8088/pujh/doc.html')">接口文档
+          </el-menu-item>
         </el-menu>
       </div>
       <!-- 工具栏 -->

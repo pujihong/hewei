@@ -1,60 +1,112 @@
 <template>
-  <el-row>
-    <el-col :span="18">
-      <div>
-        <span>青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</span>
-        <el-divider></el-divider>
-      </div>
-      <el-row>
-        <el-col :span="6">
-          <div class="my-profile-box">
-            这块用来做什么呢？
-          </div>
-
-          <div class="my-profile-box mg-t-20">
-            这块又用来做什么呢？
-          </div>
-        </el-col>
-        <el-col :span="18" class="pd-10">
-          <div>
-            这个用来展示记录列表
-            <article v-html="value"></article>
-          </div>
-        </el-col>
-      </el-row>
-    </el-col>
-    <el-col :span="6" class="pd-l-40">
-      <div>
-        这块做啥呢
-      </div>
-    </el-col>
-  </el-row>
+  <!--<div>
+    <div v-html="value"></div>
+  </div>-->
+  <div>
+    <el-table :data="articleList" style="width: 100%;" stripe>
+      <el-table-column type="index" label="序号" width="80"></el-table-column>
+      <el-table-column
+        prop="title"
+        label="标题"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="createTime"
+        label="日期"
+        :formatter="dateFormat"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="description"
+        label="描述"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="content"
+        label="内容"
+        align="center"
+      ></el-table-column>
+      <el-table-column label="操作" align="center">
+        <template slot-scope="scope">
+          <el-button size="mini" @click="handleEdit(scope.row.id)"
+            >编辑</el-button
+          >
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.row.id)"
+            >删除</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
-
 <script>
+import moment from "moment";
+
 export default {
-  name: "article",
+  name: "Article",
   data() {
     return {
-      articleList: [],
-      value: ""
+      articleList: []
     };
   },
   mounted() {
-    this.$api.blog.getUserBlogArticleList().then(res => {
-      if (res.code === 0) {
-        let dateList = res.data.records;
-        this.articleList = dateList;
-        this.value = dateList[0].htmlContent;
-      } else {
-        this.$message.error({
-          message: res.message
-        });
-      }
-    });
+    this.getData();
   },
   methods: {
-
+    getData() {
+      this.$api.blog.getUserBlogArticleList().then(res => {
+        if (res.code === 0) {
+          this.articleList = res.data.records;
+        } else {
+          this.$message.error({
+            message: res.message
+          });
+        }
+      });
+    },
+    dateFormat(row, column) {
+      var date = row[column.property];
+      if (date === undefined) {
+        return "";
+      }
+      return moment(date).format("YYYY-MM-DD");
+    },
+    handleEdit(articleId) {
+      this.$router.push({
+        name: "writeBlog",
+        params: { articleId: articleId }
+      });
+    },
+    handleDelete(articleId) {
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        type: "warning"
+      })
+        .then(() => {
+          this.$api.blog.deleteBlogArticleById({ articleId }).then(res => {
+            if (res.code === 0) {
+              this.$message({
+                type: "success",
+                message: "删除成功!"
+              });
+              this.getData();
+            } else {
+              this.$message.error({
+                message: res.message
+              });
+            }
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
+    }
   }
 };
 </script>

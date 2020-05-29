@@ -27,19 +27,18 @@
         </el-option>
       </el-select>
       <div class="mg-l-20">
-        <button class="btn btn-save" @click="saveBlogArticle(0)">保存草稿</button>
+        <button class="btn btn-save" @click="saveBlogArticle(0)">
+          保存草稿
+        </button>
       </div>
       <div class="mg-l-10">
-        <button class="btn btn-publish" @click="saveBlogArticle(1)">发布文章</button>
+        <button class="btn btn-publish" @click="saveBlogArticle(1)">
+          发布文章
+        </button>
       </div>
     </div>
 
-    <Markdown
-      :value="content"
-      v-on:getContent="getContent"
-      v-bind:height="580"
-    />
-    <div>{{ content }}</div>
+    <Markdown :value="content" @getContent="getContent" :height="500" />
   </div>
 </template>
 
@@ -58,7 +57,9 @@ export default {
       htmlContent: "",
       labelList: [],
       labelId: "",
-      labelName: ""
+      labelName: "",
+      article: "",
+      articleId: ""
     };
   },
   mounted() {
@@ -72,6 +73,27 @@ export default {
         });
       }
     });
+    let articleId = this.$route.params.articleId;
+    if (articleId) {
+      this.articleId = articleId;
+      this.$api.blog.getBlogArticleById({ articleId }).then(res => {
+        if (res.code === 0) {
+          if (res.data != null) {
+            let article = res.data;
+            this.article = article;
+            this.labelId = article.labelId;
+            this.labelName = article.labelName;
+            this.content = article.content;
+            this.htmlContent = article.htmlContent;
+            this.title = article.title;
+          }
+        } else {
+          this.$message.error({
+            message: res.message
+          });
+        }
+      });
+    }
   },
   methods: {
     saveBlogArticle(boolPublish) {
@@ -84,6 +106,7 @@ export default {
         return;
       }
       let articleInfo = {
+        articleId: this.articleId,
         title: this.title,
         labelId: this.labelId,
         content: this.content,

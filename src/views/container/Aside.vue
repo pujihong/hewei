@@ -70,7 +70,6 @@ export default {
     top: 60px;
     bottom: 0;
     text-align: left;
-    // background-color: #2968a30c;
   }
 
   .logo {

@@ -30,6 +30,11 @@ export default {
       default: 580
     }
   },
+  watch: {
+    value: function(val) {
+      this.content = val;
+    }
+  },
   data() {
     return {
       markdownOption: toolbars,
