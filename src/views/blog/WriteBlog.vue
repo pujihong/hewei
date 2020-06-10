@@ -64,7 +64,7 @@ export default {
   },
   mounted() {
     // 查询自己所有的标签
-    this.$api.blog.getUserBlogLabelList().then(res => {
+    this.$api.blog.getUserAllBlogLabelList().then(res => {
       if (res.code === 0) {
         this.labelList = res.data;
       } else {

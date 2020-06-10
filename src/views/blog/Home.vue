@@ -18,8 +18,7 @@
         <el-col :span="18" class="pd-10">
           <div>
             这个用来展示记录列表
-            <article v-html="value"></article>
-
+            <article v-if="value" v-html="value"></article>
           </div>
         </el-col>
       </el-row>
@@ -46,7 +45,9 @@ export default {
       if (res.code === 0) {
         let dateList = res.data.records;
         this.articleList = dateList;
-        this.value = dateList[0].htmlContent;
+        if (dateList.length > 0) {
+          this.value = dateList[0].htmlContent;
+        }
       } else {
         this.$message.error({
           message: res.message
@@ -54,9 +55,7 @@ export default {
       }
     });
   },
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
 

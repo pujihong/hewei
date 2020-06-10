@@ -12,8 +12,14 @@
     <div class="flex flex-row space-between">
       <div class="flex-row">
         <div class="font24 pd-l-10 pd-r-10 cursor-pointer" @click="onCollapse">
-          <i v-if="!this.$store.state.sys.collapse" class="el-icon-s-fold white" />
-          <i v-if="this.$store.state.sys.collapse" class="el-icon-s-unfold white" />
+          <i
+            v-if="!this.$store.state.sys.collapse"
+            class="el-icon-s-fold white"
+          />
+          <i
+            v-if="this.$store.state.sys.collapse"
+            class="el-icon-s-unfold white"
+          />
         </div>
         <!-- 导航菜单 -->
         <el-menu
@@ -27,7 +33,8 @@
           <el-menu-item index="1" @click="$router.push('/blog/index')"
             >{{ $t("common.blog") }}
           </el-menu-item>
-          <el-menu-item index="2" @click="openWindow('http://localhost:8088/pujh/doc.html')">接口文档
+          <el-menu-item index="2" @click="openWindow(docUrl)"
+            >接口文档
           </el-menu-item>
         </el-menu>
       </div>
@@ -80,6 +87,7 @@
 <script>
 import { mapState } from "vuex";
 import PersonalPanel from "@/components/PersonalPanel/index";
+import { baseUrl } from "../../apis";
 
 export default {
   components: {
@@ -94,7 +102,8 @@ export default {
         registeInfo: "注册时间：2018-12-20 "
       },
       activeIndex: "1",
-      langVisible: false
+      langVisible: false,
+      docUrl: baseUrl + "/doc.html"
     };
   },
   methods: {

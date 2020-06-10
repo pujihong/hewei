@@ -15,10 +15,11 @@ const routes = [
   {
     path: "/",
     component: Home,
-    name: "首页",
+    // name: "首页",
     children: [
       {
         path: "",
+        name: "helloworld",
         component: HelloWorld
       }
     ]
@@ -42,6 +43,7 @@ const routes = [
 ];
 
 const router = new VueRouter({
+  //  base: "hewei",
   mode: "history", //  去掉 http://localhost:8080/#的#
   routes
 });

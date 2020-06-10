@@ -5,7 +5,7 @@ export function login(params) {
 }
 
 export function logout() {
-  return http.get("/sys/user/login");
+  return http.get("/sys/user/logout");
 }
 
 // 查找导航菜单树

@@ -73,7 +73,6 @@ export default {
       this.$api.sys.login(userInfo).then(res => {
         if (res.code === 0) {
           sessionStorage.setItem("token", res.data.token); // 保存用户到本地会话
-          this.$store.commit("menuRouteLoaded", false); // 要求重新加载导航菜单
           this.$router.push("/"); // 登录成功，跳转到主页
         } else {
           this.$message.error({

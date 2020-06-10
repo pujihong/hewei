@@ -60,12 +60,12 @@ export default {
         type: "warning"
       })
         .then(() => {
-          sessionStorage.removeItem("user");
-          sessionStorage.removeItem("token");
-          this.$router.push("/login");
           this.$api.sys
             .logout()
             .then(() => {
+              sessionStorage.removeItem("user");
+              sessionStorage.removeItem("token");
+              this.$router.push("/login");
               location.reload(); // 作用防止重复添加路由，但是页面会闪一下
             })
             .catch(function() {});

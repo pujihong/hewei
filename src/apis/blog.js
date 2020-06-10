@@ -1,8 +1,8 @@
 import http from "../plugins/axios";
 
 // 查询自己所有的标签
-export function getUserBlogLabelList(params) {
-  return http.post("/blog/getUserBlogLabelList", params);
+export function getUserAllBlogLabelList(params) {
+  return http.post("/blog/getUserAllBlogLabelList", params);
 }
 
 // 保存博客

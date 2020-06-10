@@ -7,7 +7,6 @@
       <span class="pd-l-20">hewei</span>
       <div class="mg-l-40">
         <el-button icon="el-icon-s-home" class="btn-link">首页</el-button>
-        <el-button icon="el-icon-s-home" class="btn-link">首页</el-button>
       </div>
       <div class="header-right-box" @click="writeBlog">
         <el-button class="btn-link">写博客</el-button>
