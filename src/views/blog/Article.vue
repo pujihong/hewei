@@ -2,7 +2,7 @@
   <div class="pd-12">
     <!-- 筛选 -->
     <div class="text-left">
-      <el-input v-model="title" style="width: 180px;" placeholder="请输入标题"></el-input>
+      <el-input v-model="title" style="width: 180px;" placeholder="请输入标题" clearable></el-input>
       <el-date-picker class="mg-l-10" style="width: 320px;"
         v-model="date"
         type="daterange"
@@ -13,7 +13,7 @@
         end-placeholder="结束日期"
         :picker-options="pickerOptions">
       </el-date-picker>
-      <el-select class="mg-l-10" style="width: 180px;" v-model="labelIds" multiple placeholder="选择标签">
+      <el-select class="mg-l-10" clearable style="width: 180px;" v-model="labelIds" multiple placeholder="选择标签">
         <el-option
           v-for="item in labelList"
           :key="item.id"
@@ -21,7 +21,7 @@
           :value="item.id">
         </el-option>
       </el-select>
-      <el-select class="mg-l-10"  style="width: 180px;" v-model="boolPublish" placeholder="是否发布">
+      <el-select class="mg-l-10" clearable style="width: 180px;" v-model="boolPublish" placeholder="是否发布">
         <el-option
           v-for="item in boolList"
           :key="item.value"
@@ -99,14 +99,20 @@ export default {
   },
   methods: {
     getData() {
+      let startDate = "";
+      let endDate = "";
+      if (this.date) {
+        startDate = this.date[0];
+        endDate = this.date[1];
+      }
       let params = {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
         title: this.title,
         boolPublish: this.boolPublish,
         labelIds: this.labelIds.join(","),
-        startDate: this.date[0],
-        endDate: this.date[1]
+        startDate: startDate,
+        endDate: endDate
       };
       this.$api.blog.getUserBlogArticleList(params).then(res => {
         if (res.code === 0) {
