@@ -24,3 +24,8 @@ export function getBlogArticleById(params) {
 export function deleteBlogArticleById(params) {
   return http.post("/blog/deleteBlogArticleById", params);
 }
+
+// 发布博客信息
+export function saveBlogArticlePublishById(params) {
+  return http.post("/blog/saveBlogArticlePublishById", params);
+}
