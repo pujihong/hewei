@@ -33,20 +33,25 @@
         <i class="el-icon-search"></i> 查询</el-button>
     </div>
     <!--工具条-->
-    <div class="text-left mg-t-20">
-      <el-button type="primary" plain @click="writeBlog" size="medium">
-        <i class="el-icon-edit"></i> 写博客</el-button>
-      <el-button type="primary" plain size="medium"><i class="el-icon--right el-icon-upload "></i> 上传</el-button>
+    <div class="row flex-row space-between mg-t-20">
+      <div class="text-left">
+        <el-button type="primary" plain @click="writeArticle" size="medium">
+          <i class="el-icon-edit"></i> 写博客</el-button>
+        <el-button type="primary" plain size="medium"><i class="el-icon--right el-icon-upload "></i> 上传</el-button>
+      </div>
+      <div class="">
+        <el-button type="primary" plain @click="handleLabel" size="medium">标签管理</el-button>
+      </div>
     </div>
     <el-table class="mg-t-10" :data="articleList" border style="width: 100%;" stripe>
-      <el-table-column type="index" label="序号" width="120" align="center"></el-table-column>
-      <el-table-column prop="title" label="标题" align="center" :show-overflow-tooltip="true" width="180"></el-table-column>
-      <el-table-column prop="labelName" label="标签" align="center" width="120"></el-table-column>
-      <el-table-column prop="createTime" label="日期" :formatter="dateFormat" align="center" width="120"></el-table-column>
+      <el-table-column type="index" label="序号" width="100" align="center"></el-table-column>
+      <el-table-column prop="title" label="标题" align="center" :show-overflow-tooltip="true" width="240"></el-table-column>
+      <el-table-column prop="labelName" label="标签"  align="center" width="120"></el-table-column>
+      <el-table-column prop="createTime" label="日期" sortable :formatter="dateFormat" align="center" width="120"></el-table-column>
       <el-table-column prop="boolPublish" label="发布" align="center" :formatter="boolFormat" width="120"></el-table-column>
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <el-button size="mini" plain @click="handleEdit(scope.row.id)">查看</el-button>
+          <el-button size="mini" plain @click="handleDetail(scope.row.id)">查看</el-button>
           <el-button size="mini" type="primary" plain @click="handleEdit(scope.row.id)">编辑</el-button>
           <el-button v-if="scope.row.boolPublish === 0" size="mini" type="success" plain @click="handlePublish(scope.row.id)">发布</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
@@ -54,17 +59,23 @@
       </el-table-column>
     </el-table>
     <Pagination :total="total" :pageNum="pageNum" :pageSize="pageSize" @pageChange="pageChange"/>
+
+    <el-dialog :visible.sync="labelVisible"  title="标签管理 " append-to-body @close="refreshData" >
+       <Label @refreshData="refreshData"></Label>
+    </el-dialog>
   </div>
 </template>
 <script>
 import moment from "moment";
 import Pagination from "@/components/Pagination/index";
 import pickerOptions from "@/plugins/datePIckerOptions";
+import Label from "./Label"
 
 export default {
   name: "Article",
   components: {
-    Pagination
+    Pagination,
+    Label
   },
   data() {
     return {
@@ -81,23 +92,33 @@ export default {
         { value: 1, text: "是" }
       ],
       date: "",
-      pickerOptions: pickerOptions
+      pickerOptions: pickerOptions,
+      labelVisible: false
     };
   },
   mounted() {
-    // 查询自己所有的标签
-    this.$api.blog.getUserAllBlogLabelList().then(res => {
-      if (res.code === 0) {
-        this.labelList = res.data;
-      } else {
-        this.$message.error({
-          message: res.message
-        });
-      }
-    });
+    this.getLabelData();
     this.getData();
   },
   methods: {
+    getLabelData() {
+      // 查询自己所有的标签
+      this.$api.blog.getUserAllBlogLabelList().then(res => {
+        if (res.code === 0) {
+          this.labelList = res.data;
+          // 增加没有标签的选择
+          let label = {
+            id: -1,
+            name: " "
+          }
+          this.labelList.unshift(label);
+        } else {
+          this.$message.error({
+            message: res.message
+          });
+        }
+      });
+    },
     getData() {
       let startDate = "";
       let endDate = "";
@@ -143,7 +164,13 @@ export default {
     },
     handleEdit(articleId) {
       this.$router.push({
-        name: "writeBlog",
+        name: "writeArticle",
+        params: { articleId: articleId }
+      });
+    },
+    handleDetail(articleId) {
+      this.$router.push({
+        name: "articleContent",
         params: { articleId: articleId }
       });
     },
@@ -199,8 +226,17 @@ export default {
           });
         });
     },
-    writeBlog() {
-      this.$router.push("/blog/writeBlog");
+    writeArticle() {
+      this.$router.push("/blog/writeArticle");
+    },
+    handleLabel() {
+       this.labelVisible = true;
+    },
+    // 删除标签后刷新列表
+    refreshData() {
+      this.labelVisible = false;
+      this.getLabelData();
+      this.getData();
     }
   }
 };

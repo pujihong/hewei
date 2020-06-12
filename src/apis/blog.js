@@ -5,6 +5,16 @@ export function getUserAllBlogLabelList(params) {
   return http.post("/blog/getUserAllBlogLabelList", params);
 }
 
+// 保存标签
+export function saveBlogLabel(params) {
+  return http.post("/blog/saveBlogLabel", params);
+}
+
+// 删除标签
+export function deleteBlogLabelById(params) {
+  return http.post("/blog/deleteBlogLabelById", params);
+}
+
 // 保存博客
 export function saveBlogArticle(params) {
   return http.post("/blog/saveBlogArticle", params);

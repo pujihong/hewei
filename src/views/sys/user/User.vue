@@ -1,33 +1,7 @@
 <template>
-  <el-row>
-    <el-col :span="18">
-      <div>
-        <span>青春是一个短暂的美梦, 当你醒来时, 它早已消失无踪</span>
-        <el-divider />
-      </div>
-      <el-row>
-        <el-col :span="6">
-          <div class="my-profile-box">
-            这块用来做什么呢？
-          </div>
-
-          <div class="my-profile-box mg-t-20">
-            这块又用来做什么呢？
-          </div>
-        </el-col>
-        <el-col :span="18" class="pd-10">
-          <div>
-            这个用来展示记录列表
-          </div>
-        </el-col>
-      </el-row>
-    </el-col>
-    <el-col :span="6" class="pd-l-40">
-      <div>
-        这块做啥呢
-      </div>
-    </el-col>
-  </el-row>
+  <div>
+    user
+  </div>
 </template>
 
 <script>

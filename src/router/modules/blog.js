@@ -16,9 +16,14 @@ const blogRoutes = {
       ]
     },
     {
-      path: "writeBlog",
-      name: "writeBlog",
-      component: () => import("@/views/blog/WriteBlog.vue")
+      path: "articleContent",
+      name: "articleContent",
+      component: () => import("@/views/blog/ArticleContent.vue")
+    },
+    {
+      path: "writeArticle",
+      name: "writeArticle",
+      component: () => import("@/views/blog/WriteArticle.vue")
     }
   ]
 };
