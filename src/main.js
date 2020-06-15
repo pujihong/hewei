@@ -6,13 +6,14 @@ import store from "./store";
 import "./plugins/element.js";
 import i18n from "./i18n";
 import api from "./apis";
+import Pagination from "@/components/Pagination"
 
 Vue.prototype.$api = api;
 Vue.config.productionTip = false;
-
+Vue.component("Pagination", Pagination)
 new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+    router,
+    store,
+    i18n,
+    render: h => h(App)
 }).$mount("#app");

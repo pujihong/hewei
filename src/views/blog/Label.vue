@@ -12,7 +12,7 @@
             <el-table-column label="操作" align="center" width="180">
                 <template slot-scope="scope">
                     <el-button v-if="!scope.row.show" size="mini" @click="handleEdit(scope.$index)">编辑</el-button>
-                    <el-button v-if="scope.row.show" size="mini" @click="handleEdit(scope.$index)">取消</el-button>
+                    <el-button v-if="scope.row.show" size="mini" @click="handleEdit(scope.$index,'cancel')">取消</el-button>
                     <el-button v-if="scope.row.show" type="primary" size="mini" @click="saveLabel(scope.row)">保存
                     </el-button>
                     <el-button v-if="!scope.row.show" type="danger" size="mini" @click="deleteLabel(scope.row.id)">删除
@@ -28,7 +28,8 @@
         name: "Label",
         data() {
             return {
-                labelList: []
+                labelList: [],
+                oldName: "", // 保存编辑输入前的值
             }
         },
         mounted() {
@@ -52,11 +53,16 @@
                     }
                 });
             },
-            handleEdit(index) {
+            handleEdit(index,cancel) {
                 // 对数组元素直接辅助是没有做响应式的
                 // https://cn.vuejs.org/v2/guide/reactivity.html#%E5%A6%82%E4%BD%95%E8%BF%BD%E8%B8%AA%E5%8F%98%E5%8C%96
                 // row.show = true; 这样是不行的
                 let data = this.labelList[index];
+                if(cancel && cancel === 'cancel') {
+                    data.name = this.oldName;
+                } else {
+                    this.oldName = data.name;
+                }
                 data = {
                     id: data.id,
                     name: data.name,
@@ -98,7 +104,6 @@
                     });
             },
             saveLabel(row) {
-                console.log(row);
                 let param = {
                     labelId: row.id,
                     name: row.name

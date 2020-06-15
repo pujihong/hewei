@@ -33,13 +33,11 @@
         <i class="el-icon-search"></i> 查询</el-button>
     </div>
     <!--工具条-->
-    <div class="row flex-row space-between mg-t-20">
+    <div class="mg-t-20">
       <div class="text-left">
         <el-button type="primary" plain @click="writeArticle" size="medium">
-          <i class="el-icon-edit"></i> 写博客</el-button>
-        <el-button type="primary" plain size="medium"><i class="el-icon--right el-icon-upload "></i> 上传</el-button>
-      </div>
-      <div class="">
+          <i class="el-icon-edit"></i> 写博客
+        </el-button>
         <el-button type="primary" plain @click="handleLabel" size="medium">标签管理</el-button>
       </div>
     </div>
@@ -67,14 +65,12 @@
 </template>
 <script>
 import moment from "moment";
-import Pagination from "@/components/Pagination/index";
 import pickerOptions from "@/plugins/datePIckerOptions";
 import Label from "./Label"
 
 export default {
   name: "Article",
   components: {
-    Pagination,
     Label
   },
   data() {
