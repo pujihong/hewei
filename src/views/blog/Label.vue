@@ -12,7 +12,8 @@
             <el-table-column label="操作" align="center" width="180">
                 <template slot-scope="scope">
                     <el-button v-if="!scope.row.show" size="mini" @click="handleEdit(scope.$index)">编辑</el-button>
-                    <el-button v-if="scope.row.show" size="mini" @click="handleEdit(scope.$index,'cancel')">取消</el-button>
+                    <el-button v-if="scope.row.show" size="mini" @click="handleEdit(scope.$index,'cancel')">取消
+                    </el-button>
                     <el-button v-if="scope.row.show" type="primary" size="mini" @click="saveLabel(scope.row)">保存
                     </el-button>
                     <el-button v-if="!scope.row.show" type="danger" size="mini" @click="deleteLabel(scope.row.id)">删除
@@ -29,7 +30,8 @@
         data() {
             return {
                 labelList: [],
-                oldName: "", // 保存编辑输入前的值
+                tempLabelList: [], // 保存编辑输入前的值
+                boolAdd: false,
             }
         },
         mounted() {
@@ -46,6 +48,8 @@
                             item["show"] = false
                         });
                         this.labelList = list;
+                        // 深拷贝 这样labelList和tempLabelList不会指向同一list,修改其中之一不会导致另一个也改变
+                        this.tempLabelList = JSON.parse(JSON.stringify(list));
                     } else {
                         this.$message.error({
                             message: res.message
@@ -53,15 +57,17 @@
                     }
                 });
             },
-            handleEdit(index,cancel) {
+            handleEdit(index, cancel) {
                 // 对数组元素直接辅助是没有做响应式的
                 // https://cn.vuejs.org/v2/guide/reactivity.html#%E5%A6%82%E4%BD%95%E8%BF%BD%E8%B8%AA%E5%8F%98%E5%8C%96
                 // row.show = true; 这样是不行的
                 let data = this.labelList[index];
-                if(cancel && cancel === 'cancel') {
-                    data.name = this.oldName;
-                } else {
-                    this.oldName = data.name;
+                if (cancel && cancel === 'cancel') {
+                    data.name = this.tempLabelList[index].name;
+                    if (this.boolAdd) {
+                        this.getData();
+                        this.boolAdd = false;
+                    }
                 }
                 data = {
                     id: data.id,
@@ -74,6 +80,7 @@
                 let label = {
                     show: true
                 };
+                this.boolAdd = true;
                 this.labelList.unshift(label); // 移到第一行
             },
             deleteLabel(labelId) {

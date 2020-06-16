@@ -74,7 +74,7 @@
                     {value: 0, text: "正常"},
                     {value: 1, text: "未激活"}
                 ],
-                oldName: ""
+                tempMenuList: [],
             }
         },
         mounted() {
@@ -109,6 +109,7 @@
                             item["show"] = false
                         });
                         this.menuList = list;
+                        this.tempMenuList = JSON.parse(JSON.stringify(list));
                         this.total = res.data.total;
                     } else {
                         this.$message.error({
@@ -125,10 +126,8 @@
 
             handleEdit(index,cancel) {
                 let data = this.menuList[index];
-                if(cancel && cancel === 'cancel') {
-                    data.name = this.oldName;
-                } else {
-                    this.oldName = data.name;
+                if (cancel && cancel === 'cancel') {
+                    data.name = this.tempMenuList[index].name;
                 }
                 data = {
                     id: data.id,

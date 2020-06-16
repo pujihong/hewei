@@ -127,7 +127,7 @@ router.selfAddRoutes = function(params) {
  * 加载动态菜单和路由
  */
 function addDynamicMenuAndRoutes(token) {
-  api.sys.getUserMenu({ token }).then(res => {
+  api.sys.getUserMenuList({ token }).then(res => {
     if (res.code === 0) {
       let routeList = addDynamicRoutes(res.data, []);
       if (router.options.routes[0].children) {
