@@ -45,7 +45,7 @@ export default {
       if (res.code === 0) {
         let dateList = res.data.records;
         this.articleList = dateList;
-        if (dateList.length > 0) {
+        if (dateList && dateList.length > 0) {
           this.value = dateList[0].htmlContent;
         }
       } else {

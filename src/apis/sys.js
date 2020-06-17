@@ -13,6 +13,16 @@ export function getUserList(params) {
     return http.post("/sys/user/getUserList", params);
 }
 
+// 删除用户
+export function deleteUserById(params) {
+    return http.post("/sys/user/deleteUserById", params);
+}
+
+//  保存用户
+export function saveUser(params) {
+    return http.post("/sys/user/saveUser", params);
+}
+
 //  ---------------角色相关接口----------------
 // 查询全部可用角色列表
 export function getAllRoleList(params) {

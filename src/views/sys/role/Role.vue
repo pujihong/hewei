@@ -102,6 +102,7 @@
                 checkedKeys: [], // 已配置的菜单
                 checkedMenuIds: [],
                 roleId: "",
+                boolChecked: false, // 用于判断是否点过菜单选项，确认是否调用过check方法
             }
         },
         mounted() {
@@ -203,9 +204,13 @@
                 this.$api.sys.getRoleMenuList({roleId}).then(res => {
                     if (res.code === 0) {
                         let list = res.data;
-                        list.forEach(item => {
-                            this.checkedKeys.push(item.id);
-                        })
+                        if(list) {
+                            list.forEach(item => {
+                                if (item.parentId !== null || item.children === null) {
+                                    this.checkedKeys.push(item.id);
+                                }
+                            })
+                        }
                         this.$refs.tree.setCheckedKeys(this.checkedKeys);
                     } else {
                         this.$message.error({
@@ -215,9 +220,14 @@
                 });
             },
             check(menuData, checkedData) {
+                this.boolChecked = true;
                 this.checkedMenuIds = checkedData.checkedKeys.concat(checkedData.halfCheckedKeys);
             },
             saveRoleMenu() {
+                if (!this.boolChecked) {
+                    this.visible = false;
+                    return;
+                }
                 let param = {
                     menuIds: this.checkedMenuIds.join(","),
                     roleId: this.roleId
