@@ -30,7 +30,7 @@
           mode="horizontal"
           @select="selectNavBar()"
         >
-          <el-menu-item index="1" @click="$router.push('/blog/index')"
+          <el-menu-item index="1" @click="openWindow('https://blog.csdn.net/pujihong')"
             >{{ $t("common.blog") }}
           </el-menu-item>
           <el-menu-item index="2" @click="openWindow(docUrl)"
