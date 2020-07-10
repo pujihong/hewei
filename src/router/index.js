@@ -19,7 +19,7 @@ const routes = [
     children: [
       {
         path: "",
-        name: "helloworld",
+        name: "首页",
         component: HelloWorld
       }
     ]

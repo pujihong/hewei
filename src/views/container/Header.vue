@@ -1,26 +1,11 @@
 <template>
   <div
-    class="headbar"
+    class="head-bar"
     :style="{ background: themeColor }"
-    :class="
-      this.$store.state.sys.collapse
-        ? 'position-collapse-left'
-        : 'position-left'
-    "
-  >
+    :class=" this.$store.state.sys.collapse ? 'position-collapse-left': 'position-left'">
     <!-- 导航收缩 -->
     <div class="flex flex-row space-between">
       <div class="flex-row">
-        <div class="font24 pd-l-10 pd-r-10 cursor-pointer" @click="onCollapse">
-          <i
-            v-if="!this.$store.state.sys.collapse"
-            class="el-icon-s-fold white"
-          />
-          <i
-            v-if="this.$store.state.sys.collapse"
-            class="el-icon-s-unfold white"
-          />
-        </div>
         <!-- 导航菜单 -->
         <el-menu
           :default-active="activeIndex"
@@ -30,12 +15,13 @@
           mode="horizontal"
           @select="selectNavBar()"
         >
-          <el-menu-item index="1" @click="openWindow('https://blog.csdn.net/pujihong')"
-            >{{ $t("common.blog") }}
+          <el-menu-item index="0" @click="onCollapse">
+            <i v-if="!this.$store.state.sys.collapse" class="el-icon-s-fold white"/>
+            <i v-if="this.$store.state.sys.collapse" class="el-icon-s-unfold white"/>
           </el-menu-item>
-          <el-menu-item index="2" @click="openWindow(docUrl)"
-            >接口文档
+          <el-menu-item index="1" @click="openWindow('https://blog.csdn.net/pujihong')">{{ $t("common.blog") }}
           </el-menu-item>
+          <el-menu-item index="2" @click="openWindow(docUrl)" >接口文档 </el-menu-item>
         </el-menu>
       </div>
       <!-- 工具栏 -->
@@ -51,31 +37,16 @@
         <el-menu-item index="2" v-popover:popover-lang>
           <!-- 语言切换 -->
           <div class="white">切换</div>
-          <el-popover
-            ref="popover-lang"
-            placement="bottom-start"
-            trigger="click"
-            v-model="langVisible"
-          >
-            <div class="lang-item" @click="changeLanguage('zh-CN')">
-              简体中文
-            </div>
-            <div class="lang-item" @click="changeLanguage('en-US')">
-              English
-            </div>
+          <el-popover  ref="popover-lang" placement="bottom-start"  trigger="click" v-model="langVisible">
+            <div class="lang-item" @click="changeLanguage('zh-CN')">  简体中文 </div>
+            <div class="lang-item" @click="changeLanguage('en-US')">  English  </div>
           </el-popover>
         </el-menu-item>
         <el-menu-item index="5" v-popover:popover-personal>
           <!-- 用户信息 -->
-          <span class="user-info"
-            ><img alt="头像" :src="user.avatar" />{{ user.name }}</span
-          >
-          <el-popover
-            ref="popover-personal"
-            placement="bottom-end"
-            trigger="click"
-            :visible-arrow="false"
-          >
+          <span class="user-info"><img alt="头像" :src="user.avatar" />{{ user.name }}</span>
+          <el-popover ref="popover-personal" placement="bottom-end"
+            trigger="click" :visible-arrow="false" >
             <PersonalPanel :user="user" />
           </el-popover>
         </el-menu-item>
@@ -146,18 +117,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.headbar {
+.head-bar {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1030;
+  z-index: 9;
   height: 60px;
   line-height: 60px;
   border-color: rgba(180, 190, 190, 0.8);
-  border-left-width: 1px;
-  border-left-style: solid;
+  // border-left-width: 1px;
+  //  border-left-style: solid;
 }
-
 .lang-item {
   font-size: 16px;
   padding-left: 8px;
@@ -194,6 +164,6 @@ export default {
 }
 
 .position-collapse-left {
-  left: 65px;
+  left: 70px;
 }
 </style>

@@ -64,7 +64,7 @@ _axios.interceptors.response.use(
           router.push("/login");
           break;
         case 403:
-          error.message = "拒绝访问";
+          error.message = "登录已过期，请重新登录";
           sessionStorage.removeItem("token");
           router.push("/login");
           break;

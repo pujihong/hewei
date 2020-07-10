@@ -7,6 +7,7 @@ import "./plugins/element.js";
 import i18n from "./i18n";
 import api from "./apis";
 import Pagination from "@/components/Pagination"
+import '@/assets/scss/base.scss'
 
 Vue.prototype.$api = api;
 Vue.config.productionTip = false;

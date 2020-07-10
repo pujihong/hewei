@@ -54,7 +54,6 @@ export default {
   methods: {
     //  每页查看条数变化
     handleSizeChange(val) {
-      console.log(val);
       this.page._pageSize = val;
       this.$emit("pageChange", this.page);
     },

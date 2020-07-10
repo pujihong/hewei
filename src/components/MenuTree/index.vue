@@ -1,10 +1,7 @@
 <template>
-  <el-submenu
-    v-if="menu.children && menu.children.length >= 1"
-    :index="'' + menu.id"
-  >
+  <el-submenu v-if="menu.children && menu.children.length >= 1" :index="'' + menu.id" >
     <template slot="title">
-      <i :class="menu.icon" />
+      <i v-if="menu.icon" :class="menu.icon" />
       <span slot="title">{{ menu.name }}</span>
     </template>
     <MenuTree v-for="item in menu.children" :key="item.id" :menu="item" />
