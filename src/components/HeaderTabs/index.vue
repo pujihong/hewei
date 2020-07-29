@@ -84,7 +84,7 @@
         z-index: 9;
         height: 40px;
         line-height: 40px;
-        background-color: rgba(247, 248, 246, 0.55);
+        background-color: $white;
     }
 
     .tabs-tools {

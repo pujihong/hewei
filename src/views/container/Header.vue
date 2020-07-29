@@ -2,7 +2,7 @@
   <div
     class="head-bar"
     :style="{ background: themeColor }"
-    :class=" this.$store.state.sys.collapse ? 'position-collapse-left': 'position-left'">
+    :class="this.$store.state.sys.collapse ? 'position-collapse-left': 'position-left'">
     <!-- 导航收缩 -->
     <div class="flex flex-row space-between">
       <div class="flex-row">
@@ -155,15 +155,4 @@ export default {
   }
 }
 
-.badge {
-  line-height: 18px;
-}
-
-.position-left {
-  left: 200px;
-}
-
-.position-collapse-left {
-  left: 70px;
-}
 </style>

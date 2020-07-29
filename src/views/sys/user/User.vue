@@ -138,15 +138,17 @@
                 this.userId = "";
                 this.form.roleIds = [];
                 this.form.username = "";
-                this.$refs.userForm.resetFields();
+                this.$refs['userForm'].resetFields();
             },
             editUser(row) {
-                row.roleList.forEach(item => {
-                    this.form.roleIds.push(item.id);
-                })
-                this.userId = row.id;
-                this.form.username = row.username;
                 this.visible = true;
+                this.$nextTick(()=>{
+                    row.roleList.forEach(item => {
+                        this.form.roleIds.push(item.id);
+                    })
+                    this.userId = row.id;
+                    this.form.username = row.username;
+                })
             },
             deleteUser(userId) {
                 this.$confirm("此操作将永久删除用户信息, 是否继续?", "提示", {
@@ -206,12 +208,4 @@
 </script>
 
 <style scoped lang="scss">
-    .my-profile-box {
-        box-sizing: border-box;
-        height: 400px;
-        border: 1px solid #eaeaea;
-        box-shadow: 0 2px 5px 0 rgba(33, 22, 22, 0.2),
-        0 2px 10px 0 rgba(0, 0, 0, 0.12);
-        padding: 15px;
-    }
 </style>
